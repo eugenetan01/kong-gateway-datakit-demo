@@ -1,7 +1,6 @@
-version: '3.9'
+version: "3.9"
 
 services:
-
   postgres:
     image: postgres:13.9
     container_name: postgres
@@ -18,14 +17,14 @@ services:
     container_name: kong-gateway
     command: sh -c "kong migrations bootstrap && kong start"
     ports:
-    - "9000:9000"
-    - "9001:9001"
-    - "9002:9002"
-    - "9100:9100"
+      - "9000:9000"
+      - "9001:9001"
+      - "9002:9002"
+      - "9100:9100"
     env_file:
       - .env
     volumes:
-    - "./datakit:/usr/local/kong/wasm/"
+      - "./datakit:/usr/local/kong/wasm/"
     environment:
       KONG_DATABASE: postgres
       KONG_LOG_LEVEL: debug
@@ -44,7 +43,8 @@ services:
       KONG_ANONYMOUS_REPORTS: off
       KONG_WASM: on
       KONG_WASM_FILTERS_PATH: "/usr/local/kong/wasm/"
+      KONG_LICENSE_DATA: ${KONG_LICENSE_DATA}
 
     restart: always
     depends_on:
-    - postgres
+      - postgres
